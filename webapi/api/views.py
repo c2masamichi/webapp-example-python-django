@@ -2,7 +2,7 @@ from django.http.response import JsonResponse
 
 
 def get_products(request):
-    products =  {
+    products = {
         'result': [
             {
                 'id': 1,
