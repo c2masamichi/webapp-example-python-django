@@ -1,19 +1,18 @@
 from django.http.response import JsonResponse
 
+from api.models import Product
+
 
 def get_products(request):
-    products = {
+    products = Product.objects.all()
+    data = {
         'result': [
             {
-                'id': 1,
-                'name': 'book',
-                'price': 600
-            },
-            {
-                'id': 2,
-                'name': 'fisj',
-                'price': 200
-            },
+                'id': row.id,
+                'name': row.name,
+                'price': row.price,
+            }
+            for row in products
         ]
     }
-    return JsonResponse(products)
+    return JsonResponse(data)
