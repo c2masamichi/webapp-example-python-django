@@ -19,3 +19,18 @@ class ProductsViewTests(TestCase):
         assert 'result' in data
         products = data['result']
         assert len(products) == 2
+
+    def test_get_product(self):
+        product_id = 1
+        name = 'book'
+        price = 600
+        url = reverse('api_v1:detail', args=(product_id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+        data = json.loads(response.content)
+        assert 'result' in data
+        product = data['result']
+        assert product['id'] == product_id
+        assert product['name'] == name
+        assert product['price'] == price
