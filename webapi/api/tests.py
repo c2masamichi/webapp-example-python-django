@@ -13,7 +13,7 @@ class ProductsViewTests(TestCase):
 
     def test_get_products(self):
         response = self.client.get(reverse('api_v1:list'))
-        self.assertEqual(response.status_code, 200)
+        assert response.status_code == 200
 
         data = json.loads(response.content)
         assert 'result' in data
@@ -26,7 +26,7 @@ class ProductsViewTests(TestCase):
         price = 600
         url = reverse('api_v1:detail', args=(product_id,))
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        assert response.status_code == 200
 
         data = json.loads(response.content)
         assert 'result' in data
