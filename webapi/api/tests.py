@@ -34,3 +34,9 @@ class ProductsViewTests(TestCase):
         assert product['id'] == product_id
         assert product['name'] == name
         assert product['price'] == price
+
+    def test_get_product_exists_required(self):
+        product_id = 10
+        url = reverse('api_v1:detail', args=(product_id,))
+        response = self.client.get(url)
+        assert response.status_code == 404
