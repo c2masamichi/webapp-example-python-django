@@ -40,3 +40,18 @@ class ProductsViewTests(TestCase):
         url = reverse('api_v1:detail', args=(product_id,))
         response = self.client.get(url)
         assert response.status_code == 404
+
+    def test_create_product(self):
+        name = 'meet'
+        price = 1000
+        new_product = {
+            'name': name,
+            'price': price,
+        }
+        url = reverse('api_v1:create')
+        response = self.client.post(url, new_product)
+        assert response.status_code == 200
+
+        product = Product.objects.get(pk=3)
+        assert product.name == name
+        assert product.price == price
