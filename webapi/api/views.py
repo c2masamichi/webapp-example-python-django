@@ -5,7 +5,14 @@ from django.views.decorators.http import require_http_methods
 from api.models import Product
 
 
-@require_http_methods(['GET'])
+@require_http_methods(['GET', 'POST'])
+def list_or_create_product(request):
+    if request.method == 'GET':
+        return get_products(request)
+    elif request.method == 'POST':
+        return create_product(request)
+
+
 def get_products(request):
     products = Product.objects.all()
     data = {
@@ -21,6 +28,13 @@ def get_products(request):
     return JsonResponse(data)
 
 
+def create_product(request):
+    product = Product.objects.create(name='meet', price=1000)
+    product.save()
+    data = {'result': 'Successfully Created.'}
+    return JsonResponse(data)
+
+
 @require_http_methods(['GET'])
 def get_product(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
@@ -31,12 +45,4 @@ def get_product(request, product_id):
             'price': product.price,
         }
     }
-    return JsonResponse(data)
-
-
-@require_http_methods(['POST'])
-def create_product(request):
-    product = Product.objects.create(name='meet', price=1000)
-    product.save()
-    data = {'result': 'Successfully Created.'}
     return JsonResponse(data)
