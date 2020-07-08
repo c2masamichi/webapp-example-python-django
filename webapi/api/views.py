@@ -1,3 +1,5 @@
+import json
+
 from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_http_methods
@@ -29,7 +31,11 @@ def get_products(request):
 
 
 def create_product(request):
-    product = Product(name='meet', price=1000)
+    body = json.loads(request.body)
+    name = body.get('name')
+    price = body.get('price')
+
+    product = Product(name=name, price=price)
     product.save()
     data = {'result': 'Successfully Created.'}
     return JsonResponse(data)
@@ -58,9 +64,13 @@ def get_product(request, product_id):
 
 
 def update_product(request, product_id):
+    body = json.loads(request.body)
+    name = body.get('name')
+    price = body.get('price')
+
     product = Product.objects.get(pk=product_id)
-    product.name = 'rice'
-    product.price = 900
+    product.name = name
+    product.price = price
     product.save()
     data = {'result': 'Successfully Updated.'}
     return JsonResponse(data)
