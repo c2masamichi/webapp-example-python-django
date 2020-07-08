@@ -56,3 +56,31 @@ class ProductsViewTests(TestCase):
         product = Product.objects.get(pk=3)
         assert product.name == name
         assert product.price == price
+
+    def test_update_product(self):
+        product_id = 2
+        name = 'rice'
+        price = 900
+        updated_data = {
+            'name': name,
+            'price': price,
+        }
+        path = '{0}/products/{1}'.format(PATH_PREFIX, product_id)
+        response = self.client.put(
+            path, data=updated_data,
+            content_type='application/json'
+        )
+        assert response.status_code == 200
+
+        product = Product.objects.get(pk=product_id)
+        assert product.name == name
+        assert product.price == price
+
+    def test_delete_product(self):
+        product_id = 2
+        path = '{0}/products/{1}'.format(PATH_PREFIX, product_id)
+        response = self.client.delete(path)
+        assert response.status_code == 200
+
+        with self.assertRaises(Product.DoesNotExist):
+            Product.objects.get(pk=product_id)
