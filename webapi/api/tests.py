@@ -50,7 +50,10 @@ class ProductsViewTests(TestCase):
             'price': price,
         }
         path = '{0}/products'.format(PATH_PREFIX)
-        response = self.client.post(path, data=new_product)
+        response = self.client.post(
+            path, data=new_product,
+            content_type='application/json'
+        )
         assert response.status_code == 200
 
         product = Product.objects.get(pk=3)
