@@ -29,7 +29,7 @@ def get_products(request):
 
 
 def create_product(request):
-    product = Product.objects.create(name='meet', price=1000)
+    product = Product(name='meet', price=1000)
     product.save()
     data = {'result': 'Successfully Created.'}
     return JsonResponse(data)
