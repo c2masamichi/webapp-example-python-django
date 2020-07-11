@@ -68,7 +68,7 @@ def update_product(request, product_id):
     name = body.get('name')
     price = body.get('price')
 
-    product = Product.objects.get(pk=product_id)
+    product = get_object_or_404(Product, pk=product_id)
     product.name = name
     product.price = price
     product.save()
@@ -77,7 +77,7 @@ def update_product(request, product_id):
 
 
 def delete_product(request, product_id):
-    product = Product.objects.get(pk=product_id)
+    product = get_object_or_404(Product, pk=product_id)
     product.delete()
     data = {'result': 'Successfully Deleted.'}
     return JsonResponse(data)

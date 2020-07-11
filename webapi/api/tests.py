@@ -79,6 +79,18 @@ class ProductsViewTests(TestCase):
         assert product.name == name
         assert product.price == price
 
+    def test_update_product_exists_required(self):
+        updated_data = {
+            'name': 'rice',
+            'price': 900,
+        }
+        path = '{0}/products/10'.format(PATH_PREFIX)
+        response = self.client.put(
+            path, data=updated_data,
+            content_type='application/json'
+        )
+        assert response.status_code == 404
+
     def test_delete_product(self):
         product_id = 2
         path = '{0}/products/{1}'.format(PATH_PREFIX, product_id)
@@ -87,3 +99,8 @@ class ProductsViewTests(TestCase):
 
         with self.assertRaises(Product.DoesNotExist):
             Product.objects.get(pk=product_id)
+
+    def test_delete_product_exists_required(self):
+        path = '{0}/products/10'.format(PATH_PREFIX)
+        response = self.client.delete(path)
+        assert response.status_code == 404
