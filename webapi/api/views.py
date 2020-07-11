@@ -15,6 +15,16 @@ def list_or_create_product(request):
         return create_product(request)
 
 
+@require_http_methods(['GET', 'PUT', 'DELETE'])
+def get_or_update_or_delete_product(request, product_id):
+    if request.method == 'GET':
+        return get_product(request, product_id)
+    elif request.method == 'PUT':
+        return update_product(request, product_id)
+    elif request.method == 'DELETE':
+        return delete_product(request, product_id)
+
+
 def get_products(request):
     products = Product.objects.all()
     data = {
@@ -39,16 +49,6 @@ def create_product(request):
     product.save()
     data = {'result': 'Successfully Created.'}
     return JsonResponse(data)
-
-
-@require_http_methods(['GET', 'PUT', 'DELETE'])
-def get_or_update_or_delete_product(request, product_id):
-    if request.method == 'GET':
-        return get_product(request, product_id)
-    elif request.method == 'PUT':
-        return update_product(request, product_id)
-    elif request.method == 'DELETE':
-        return delete_product(request, product_id)
 
 
 def get_product(request, product_id):
