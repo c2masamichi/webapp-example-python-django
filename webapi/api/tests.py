@@ -43,16 +43,60 @@ class ProductsViewTests(TestCase):
         assert response.status_code == 404
 
     def test_create_product(self):
-        name = 'meet'
-        price = 1000
-        new_product = {
-            'name': name,
-            'price': price,
+        post_data = {
+            'name': 'meet',
+            'price': 1000,
         }
         path = '{0}/products'.format(PATH_PREFIX)
-        response = self.client.post(path, data=new_product)
+        response = self.client.post(
+            path, data=post_data,
+            content_type='application/json'
+        )
         assert response.status_code == 200
 
         product = Product.objects.get(pk=3)
-        assert product.name == name
-        assert product.price == price
+        assert product.name == post_data['name']
+        assert product.price == post_data['price']
+
+    def test_update_product(self):
+        product_id = 2
+        post_data = {
+            'name': 'rice',
+            'price': 900,
+        }
+        path = '{0}/products/{1}'.format(PATH_PREFIX, product_id)
+        response = self.client.put(
+            path, data=post_data,
+            content_type='application/json'
+        )
+        assert response.status_code == 200
+
+        product = Product.objects.get(pk=product_id)
+        assert product.name == post_data['name']
+        assert product.price == post_data['price']
+
+    def test_update_product_exists_required(self):
+        post_data = {
+            'name': 'rice',
+            'price': 900,
+        }
+        path = '{0}/products/10'.format(PATH_PREFIX)
+        response = self.client.put(
+            path, data=post_data,
+            content_type='application/json'
+        )
+        assert response.status_code == 404
+
+    def test_delete_product(self):
+        product_id = 2
+        path = '{0}/products/{1}'.format(PATH_PREFIX, product_id)
+        response = self.client.delete(path)
+        assert response.status_code == 200
+
+        with self.assertRaises(Product.DoesNotExist):
+            Product.objects.get(pk=product_id)
+
+    def test_delete_product_exists_required(self):
+        path = '{0}/products/10'.format(PATH_PREFIX)
+        response = self.client.delete(path)
+        assert response.status_code == 404

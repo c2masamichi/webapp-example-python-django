@@ -1,3 +1,5 @@
+import json
+
 from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_http_methods
@@ -11,6 +13,16 @@ def list_or_create_product(request):
         return get_products(request)
     elif request.method == 'POST':
         return create_product(request)
+
+
+@require_http_methods(['GET', 'PUT', 'DELETE'])
+def get_or_update_or_delete_product(request, product_id):
+    if request.method == 'GET':
+        return get_product(request, product_id)
+    elif request.method == 'PUT':
+        return update_product(request, product_id)
+    elif request.method == 'DELETE':
+        return delete_product(request, product_id)
 
 
 def get_products(request):
@@ -29,13 +41,16 @@ def get_products(request):
 
 
 def create_product(request):
-    product = Product.objects.create(name='meet', price=1000)
+    body = json.loads(request.body)
+    name = body.get('name')
+    price = body.get('price')
+
+    product = Product(name=name, price=price)
     product.save()
     data = {'result': 'Successfully Created.'}
     return JsonResponse(data)
 
 
-@require_http_methods(['GET'])
 def get_product(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     data = {
@@ -45,4 +60,24 @@ def get_product(request, product_id):
             'price': product.price,
         }
     }
+    return JsonResponse(data)
+
+
+def update_product(request, product_id):
+    body = json.loads(request.body)
+    name = body.get('name')
+    price = body.get('price')
+
+    product = get_object_or_404(Product, pk=product_id)
+    product.name = name
+    product.price = price
+    product.save()
+    data = {'result': 'Successfully Updated.'}
+    return JsonResponse(data)
+
+
+def delete_product(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    product.delete()
+    data = {'result': 'Successfully Deleted.'}
     return JsonResponse(data)
