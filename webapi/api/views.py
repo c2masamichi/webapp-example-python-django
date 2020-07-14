@@ -52,7 +52,13 @@ def create_product(request):
 
 
 def get_product(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
+    try:
+        product = Product.objects.get(pk=product_id)
+    except Product.DoesNotExist:
+        data = {
+            'error': 'Not Found product {0}'.format(product_id)
+        }
+        return JsonResponse(data, status=404)
     data = {
         'result': {
             'id': product.id,
