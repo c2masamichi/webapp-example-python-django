@@ -1,7 +1,6 @@
 import json
 
 from django.http.response import JsonResponse
-from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_http_methods
 
 from api.models import Product
@@ -59,6 +58,7 @@ def get_product(request, product_id):
             'error': 'Not Found product {0}'.format(product_id)
         }
         return JsonResponse(data, status=404)
+
     data = {
         'result': {
             'id': product.id,
@@ -74,7 +74,14 @@ def update_product(request, product_id):
     name = body.get('name')
     price = body.get('price')
 
-    product = get_object_or_404(Product, pk=product_id)
+    try:
+        product = Product.objects.get(pk=product_id)
+    except Product.DoesNotExist:
+        data = {
+            'error': 'Not Found product {0}'.format(product_id)
+        }
+        return JsonResponse(data, status=404)
+
     product.name = name
     product.price = price
     product.save()
@@ -83,7 +90,14 @@ def update_product(request, product_id):
 
 
 def delete_product(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
+    try:
+        product = Product.objects.get(pk=product_id)
+    except Product.DoesNotExist:
+        data = {
+            'error': 'Not Found product {0}'.format(product_id)
+        }
+        return JsonResponse(data, status=404)
+
     product.delete()
     data = {'result': 'Successfully Deleted.'}
     return JsonResponse(data)
