@@ -40,6 +40,12 @@ def get_products(request):
 
 
 def create_product(request):
+    if request.headers.get('Content-Type') != 'application/json':
+        data = {
+            'error': 'Bad Request: Content-Type must be application/json.'
+        }
+        return JsonResponse(data, status=400)
+
     body = json.loads(request.body)
     name = body.get('name')
     price = body.get('price')
@@ -70,6 +76,12 @@ def get_product(request, product_id):
 
 
 def update_product(request, product_id):
+    if request.headers.get('Content-Type') != 'application/json':
+        data = {
+            'error': 'Bad Request: Content-Type must be application/json.'
+        }
+        return JsonResponse(data, status=400)
+
     body = json.loads(request.body)
     name = body.get('name')
     price = body.get('price')

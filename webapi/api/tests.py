@@ -58,6 +58,13 @@ class ProductsViewTests(TestCase):
         assert product.name == post_data['name']
         assert product.price == post_data['price']
 
+    def test_create_product_validate01(self):
+        path = '{0}/products'.format(PATH_PREFIX)
+        response = self.client.post(path, data={'data' :'wrong data'})
+        assert response.status_code == 400
+        data = json.loads(response.content)
+        assert 'Content-Type must be application/json.' in data['error']
+
     def test_update_product(self):
         product_id = 2
         post_data = {
@@ -86,6 +93,14 @@ class ProductsViewTests(TestCase):
             content_type='application/json'
         )
         assert response.status_code == 404
+
+    def test_update_product_validate01(self):
+        product_id = 2
+        path = '{0}/products/{1}'.format(PATH_PREFIX, product_id)
+        response = self.client.put(path, data={'data' :'wrong data'})
+        assert response.status_code == 400
+        data = json.loads(response.content)
+        assert 'Content-Type must be application/json.' in data['error']
 
     def test_delete_product(self):
         product_id = 2
