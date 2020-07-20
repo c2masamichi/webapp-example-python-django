@@ -49,6 +49,11 @@ def create_product(request):
     body = json.loads(request.body)
     name = body.get('name')
     price = body.get('price')
+    if name is None or price is None:
+        data = {
+            'error': 'Bad Request: The key "name" and "price" are required.'
+        }
+        return JsonResponse(data, status=400)
 
     product = Product(name=name, price=price)
     product.save()
@@ -85,6 +90,11 @@ def update_product(request, product_id):
     body = json.loads(request.body)
     name = body.get('name')
     price = body.get('price')
+    if name is None or price is None:
+        data = {
+            'error': 'Bad Request: The key "name" and "price" are required.'
+        }
+        return JsonResponse(data, status=400)
 
     try:
         product = Product.objects.get(pk=product_id)

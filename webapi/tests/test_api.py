@@ -71,6 +71,25 @@ def test_create_product_validate01(client):
 
 
 @pytest.mark.django_db
+@pytest.mark.parametrize(
+    'post_data',
+    (
+        {'name': 'meat'},
+        {'price': 1000},
+    )
+)
+def test_create_product_validate02(client, post_data):
+    path = '{0}/products'.format(PATH_PREFIX)
+    response = client.post(
+        path, data=post_data,
+        content_type='application/json'
+    )
+    assert response.status_code == 400
+    data = json.loads(response.content)
+    assert 'The key "name" and "price" are required.' in data['error']
+
+
+@pytest.mark.django_db
 def test_update_product(client):
     product_id = 2
     post_data = {
@@ -111,6 +130,26 @@ def test_update_product_validate01(client):
     assert response.status_code == 400
     data = json.loads(response.content)
     assert 'Content-Type must be application/json.' in data['error']
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    'post_data',
+    (
+        {'name': 'meat'},
+        {'price': 1000},
+    )
+)
+def test_update_product_validate02(client, post_data):
+    product_id = 2
+    path = '{0}/products/{1}'.format(PATH_PREFIX, product_id)
+    response = client.put(
+        path, data=post_data,
+        content_type='application/json'
+    )
+    assert response.status_code == 400
+    data = json.loads(response.content)
+    assert 'The key "name" and "price" are required.' in data['error']
 
 
 @pytest.mark.django_db
