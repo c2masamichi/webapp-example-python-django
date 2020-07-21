@@ -1,7 +1,7 @@
 import json
 
 from django.http.response import JsonResponse
-from django.shortcuts import get_object_or_404
+from django.db.utils import IntegrityError
 from django.views.decorators.http import require_http_methods
 
 from api.models import Product
@@ -41,18 +41,43 @@ def get_products(request):
 
 
 def create_product(request):
+    if request.headers.get('Content-Type') != 'application/json':
+        data = {
+            'error': 'Bad Request: Content-Type must be application/json.'
+        }
+        return JsonResponse(data, status=400)
+
     body = json.loads(request.body)
     name = body.get('name')
     price = body.get('price')
+    if name is None or price is None:
+        data = {
+            'error': 'Bad Request: The key "name" and "price" are required.'
+        }
+        return JsonResponse(data, status=400)
 
-    product = Product(name=name, price=price)
-    product.save()
+    try:
+        product = Product(name=name, price=price)
+        product.save()
+    except IntegrityError:
+        data = {
+            'error': 'Bad Request: Bad data.'
+        }
+        return JsonResponse(data, status=400)
+
     data = {'result': 'Successfully Created.'}
     return JsonResponse(data)
 
 
 def get_product(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
+    try:
+        product = Product.objects.get(pk=product_id)
+    except Product.DoesNotExist:
+        data = {
+            'error': 'Not Found product {0}'.format(product_id)
+        }
+        return JsonResponse(data, status=404)
+
     data = {
         'result': {
             'id': product.id,
@@ -64,20 +89,52 @@ def get_product(request, product_id):
 
 
 def update_product(request, product_id):
+    if request.headers.get('Content-Type') != 'application/json':
+        data = {
+            'error': 'Bad Request: Content-Type must be application/json.'
+        }
+        return JsonResponse(data, status=400)
+
     body = json.loads(request.body)
     name = body.get('name')
     price = body.get('price')
+    if name is None or price is None:
+        data = {
+            'error': 'Bad Request: The key "name" and "price" are required.'
+        }
+        return JsonResponse(data, status=400)
 
-    product = get_object_or_404(Product, pk=product_id)
-    product.name = name
-    product.price = price
-    product.save()
+    try:
+        product = Product.objects.get(pk=product_id)
+    except Product.DoesNotExist:
+        data = {
+            'error': 'Not Found product {0}'.format(product_id)
+        }
+        return JsonResponse(data, status=404)
+
+    try:
+        product.name = name
+        product.price = price
+        product.save()
+    except IntegrityError:
+        data = {
+            'error': 'Bad Request: Bad data.'
+        }
+        return JsonResponse(data, status=400)
+
     data = {'result': 'Successfully Updated.'}
     return JsonResponse(data)
 
 
 def delete_product(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
+    try:
+        product = Product.objects.get(pk=product_id)
+    except Product.DoesNotExist:
+        data = {
+            'error': 'Not Found product {0}'.format(product_id)
+        }
+        return JsonResponse(data, status=404)
+
     product.delete()
     data = {'result': 'Successfully Deleted.'}
     return JsonResponse(data)
