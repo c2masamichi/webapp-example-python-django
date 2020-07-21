@@ -1,6 +1,7 @@
 import json
 
 from django.http.response import JsonResponse
+from django.db.utils import IntegrityError
 from django.views.decorators.http import require_http_methods
 
 from api.models import Product
@@ -55,8 +56,15 @@ def create_product(request):
         }
         return JsonResponse(data, status=400)
 
-    product = Product(name=name, price=price)
-    product.save()
+    try:
+        product = Product(name=name, price=price)
+        product.save()
+    except IntegrityError:
+        data = {
+            'error': 'Bad Request: Bad data.'
+        }
+        return JsonResponse(data, status=400)
+
     data = {'result': 'Successfully Created.'}
     return JsonResponse(data)
 
@@ -104,9 +112,16 @@ def update_product(request, product_id):
         }
         return JsonResponse(data, status=404)
 
-    product.name = name
-    product.price = price
-    product.save()
+    try:
+        product.name = name
+        product.price = price
+        product.save()
+    except IntegrityError:
+        data = {
+            'error': 'Bad Request: Bad data.'
+        }
+        return JsonResponse(data, status=400)
+
     data = {'result': 'Successfully Updated.'}
     return JsonResponse(data)
 
