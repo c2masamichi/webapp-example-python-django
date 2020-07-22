@@ -1,7 +1,7 @@
 import json
 
+from django.core.exceptions import ValidationError
 from django.http.response import JsonResponse
-from django.db.utils import IntegrityError
 from django.views.decorators.http import require_http_methods
 
 from api.models import Product
@@ -58,8 +58,9 @@ def create_product(request):
 
     try:
         product = Product(name=name, price=price)
+        product.full_clean()
         product.save()
-    except IntegrityError:
+    except ValidationError:
         data = {
             'error': 'Bad Request: Bad data.'
         }
@@ -115,8 +116,9 @@ def update_product(request, product_id):
     try:
         product.name = name
         product.price = price
+        product.full_clean()
         product.save()
-    except IntegrityError:
+    except ValidationError:
         data = {
             'error': 'Bad Request: Bad data.'
         }
