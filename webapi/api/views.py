@@ -30,11 +30,11 @@ def get_products(request):
     data = {
         'result': [
             {
-                'id': row.id,
-                'name': row.name,
-                'price': row.price,
+                'id': product.id,
+                'name': product.name,
+                'price': product.price,
             }
-            for row in products
+            for product in products
         ]
     }
     return JsonResponse(data)
