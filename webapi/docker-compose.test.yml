@@ -1,0 +1,5 @@
+version: '3'
+services:
+  web:
+    ports:
+      - "28000:8000"
