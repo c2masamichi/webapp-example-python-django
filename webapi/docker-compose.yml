@@ -4,3 +4,7 @@ services:
     build: .
     volumes:
       - .:/code
+    depends_on:
+      - db
+  db:
+    image: "mysql:5.7"
