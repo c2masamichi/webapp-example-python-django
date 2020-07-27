@@ -9,6 +9,12 @@ $ docker-compose -f docker-compose.yml -f docker-compose.dev.yml -p webapi_dev u
 $ docker exec -it webapi_dev_web_1 python manage.py migrate
 ```
 
+load test data
+
+```
+docker exec -it webapi_dev_web_1 python manage.py loaddata test_data.json
+```
+
 ### Clear
 
 ```
