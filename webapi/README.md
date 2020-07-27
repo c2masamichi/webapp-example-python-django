@@ -7,8 +7,6 @@
 ```
 $ docker-compose -f docker-compose.yml -f docker-compose.dev.yml -p webapi_dev up -d
 $ docker exec -it webapi_dev_web_1 python manage.py migrate
-$ docker exec -it webapi_dev_web_1 python manage.py makemigrations api
-$ docker exec -it webapi_dev_web_1 python manage.py sqlmigrate api 0001
 ```
 
 ### Clear
