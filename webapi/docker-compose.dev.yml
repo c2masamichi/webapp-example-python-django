@@ -3,6 +3,8 @@ services:
   web:
     ports:
       - "18000:8000"
+    environment:
+      DJANGO_SETTINGS_MODULE: webapi.development_settings
   db:
     ports:
       - "13306:3306"

@@ -3,6 +3,8 @@ services:
   web:
     ports:
       - "28000:8000"
+    environment:
+      DJANGO_SETTINGS_MODULE: webapi.test_settings
   db:
     ports:
       - "23306:3306"
