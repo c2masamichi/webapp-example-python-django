@@ -77,9 +77,9 @@ WSGI_APPLICATION = 'webapi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dev_db',
-        'USER': 'dev_user',
-        'PASSWORD': 'dev_pass',
+        'NAME': 'test_db',
+        'USER': 'root',  # to make database in pytest
+        'PASSWORD': 'root_test',
         'HOST': 'db',
         'PORT': '3306',
     }
