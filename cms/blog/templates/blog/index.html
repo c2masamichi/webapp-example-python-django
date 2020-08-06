@@ -2,5 +2,6 @@
   <div class="entry">
     <h2>{{ entry.title }}</h2>
     <div class="about">created {{ entry.created|date:"Y-m-d" }}</div>
+    <a href="{% url 'blog:detail' entry.id %}">read</a>
   </div>
 {% endfor %}
