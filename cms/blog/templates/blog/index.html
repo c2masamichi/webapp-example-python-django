@@ -1,0 +1,6 @@
+{% for entry in entries %}
+  <div class="entry">
+    <h2>{{ entry.title }}</h2>
+    <div class="about">created {{ entry.created|date:"Y-m-d" }}</div>
+  </div>
+{% endfor %}

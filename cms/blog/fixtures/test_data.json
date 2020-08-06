@@ -1,0 +1,29 @@
+[
+  {
+    "model": "blog.entry",
+    "pk": 1,
+    "fields": {
+      "title": "Test Title 1",
+      "body": "This body is test.",
+      "created": "2019-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "blog.entry",
+    "pk": 2,
+    "fields": {
+      "title": "Test Title 2",
+      "body": "Test Test Test Test",
+      "created": "2019-01-01T12:30:45Z"
+    }
+  },
+  {
+    "model": "blog.entry",
+    "pk": 3,
+    "fields": {
+      "title": "Test Title 3",
+      "body": "Test Test Test Test",
+      "created": "2019-01-02T08:20:01Z"
+    }
+  }
+]
