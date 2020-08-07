@@ -9,6 +9,12 @@ $ docker-compose -f docker-compose.yml -f docker-compose.dev.yml -p cms_dev up -
 $ docker exec -it cms_dev_web_1 python manage.py migrate
 ```
 
+create superuser
+
+```
+docker exec -it cms_dev_web_1 python manage.py createsuperuser --username dev-user --email dev-user@example.com
+```
+
 load test data
 
 ```
