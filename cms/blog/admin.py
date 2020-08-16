@@ -3,4 +3,7 @@ from django.contrib import admin
 from .models import Entry
 
 
+class EntryAdmin(admin.ModelAdmin):
+    fields = ('title', 'body')
+
 admin.site.register(Entry)
