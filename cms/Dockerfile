@@ -1,7 +1,9 @@
-FROM python:3.8.5-buster
+FROM python:3.8.5-slim-buster
 
 WORKDIR /code
 
+RUN apt update \
+  && apt install -y gcc default-libmysqlclient-dev
 RUN pip install pipenv
 COPY Pipfile Pipfile
 COPY Pipfile.lock Pipfile.lock
