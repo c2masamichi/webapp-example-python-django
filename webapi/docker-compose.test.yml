@@ -7,7 +7,7 @@ services:
       DJANGO_SETTINGS_MODULE: webapi.test_settings
   db:
     ports:
-      - "23306:3306"
+      - "43306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root_test
       MYSQL_DATABASE: test_db
