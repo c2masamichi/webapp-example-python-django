@@ -66,7 +66,14 @@ def create_product(request):
         }
         return JsonResponse(data, status=400)
 
-    data = {'result': 'Successfully Created.'}
+    data = {
+        'message': 'Successfully Created.',
+        'result': {
+            'id': product.id,
+            'name': product.name,
+            'price': product.price,
+        }
+    }
     return JsonResponse(data)
 
 
