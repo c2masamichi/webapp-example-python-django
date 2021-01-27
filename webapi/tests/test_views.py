@@ -45,6 +45,7 @@ def test_get_product_exists_required(client):
 
 @pytest.mark.django_db
 def test_create_product(client):
+    product_id = 3
     post_data = {
         'name': 'meet',
         'price': 1000,
@@ -56,7 +57,14 @@ def test_create_product(client):
     )
     assert response.status_code == 200
 
-    product = Product.objects.get(pk=3)
+    data = json.loads(response.content)
+    assert 'result' in data
+    product = data['result']
+    assert product['id'] == product_id
+    assert product['name'] == post_data['name']
+    assert product['price'] == post_data['price']
+
+    product = Product.objects.get(pk=product_id)
     assert product.name == post_data['name']
     assert product.price == post_data['price']
 
