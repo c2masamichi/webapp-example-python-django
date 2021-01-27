@@ -131,6 +131,13 @@ def test_update_product(client):
     )
     assert response.status_code == 200
 
+    data = json.loads(response.content)
+    assert 'result' in data
+    result = data['result']
+    assert result['id'] == product_id
+    assert result['name'] == name
+    assert result['price'] == price
+
     product = Product.objects.get(pk=product_id)
     assert product.name == name
     assert product.price == price
