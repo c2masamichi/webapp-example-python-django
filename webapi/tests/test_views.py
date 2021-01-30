@@ -207,9 +207,18 @@ def test_update_product_validate03(client):
 @pytest.mark.django_db
 def test_delete_product(client):
     product_id = 2
+    name = 'fish'
+    price = 200
     path = '{0}/products/{1}'.format(PATH_PREFIX, product_id)
     response = client.delete(path)
     assert response.status_code == 200
+
+    data = json.loads(response.content)
+    assert 'result' in data
+    result = data['result']
+    assert result['id'] == product_id
+    assert result['name'] == name
+    assert result['price'] == price
 
     with pytest.raises(Product.DoesNotExist):
         Product.objects.get(pk=product_id)

@@ -151,6 +151,14 @@ def delete_product(request, product_id):
         }
         return JsonResponse(data, status=404)
 
+    deleted_product = {
+        'id': product.id,
+        'name': product.name,
+        'price': product.price,
+    }
     product.delete()
-    data = {'result': 'Successfully Deleted.'}
+    data = {
+        'message': 'Successfully Deleted.',
+        'result': deleted_product
+    }
     return JsonResponse(data)
