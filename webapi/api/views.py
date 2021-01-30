@@ -66,7 +66,14 @@ def create_product(request):
         }
         return JsonResponse(data, status=400)
 
-    data = {'result': 'Successfully Created.'}
+    data = {
+        'message': 'Successfully Created.',
+        'result': {
+            'id': product.id,
+            'name': product.name,
+            'price': product.price,
+        }
+    }
     return JsonResponse(data)
 
 
@@ -124,7 +131,14 @@ def update_product(request, product_id):
         }
         return JsonResponse(data, status=400)
 
-    data = {'result': 'Successfully Updated.'}
+    data = {
+        'message': 'Successfully Updated.',
+        'result': {
+            'id': product.id,
+            'name': product.name,
+            'price': product.price,
+        }
+    }
     return JsonResponse(data)
 
 
@@ -137,6 +151,14 @@ def delete_product(request, product_id):
         }
         return JsonResponse(data, status=404)
 
+    deleted_product = {
+        'id': product.id,
+        'name': product.name,
+        'price': product.price,
+    }
     product.delete()
-    data = {'result': 'Successfully Deleted.'}
+    data = {
+        'message': 'Successfully Deleted.',
+        'result': deleted_product
+    }
     return JsonResponse(data)
