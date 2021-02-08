@@ -1,6 +1,9 @@
 {% load static %}
 <link rel="icon" type="image/png" href="{% static 'blog/icon/favicon.png' %}">
 
+<header>
+  <h1>Entries</h1>
+</header>
 {% for entry in entries %}
   <div class="entry">
     <h2>{{ entry.title }}</h2>
