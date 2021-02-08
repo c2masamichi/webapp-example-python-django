@@ -1,13 +1,15 @@
-{% load static %}
-<link rel="icon" type="image/png" href="{% static 'blog/icon/favicon.png' %}">
+{% extends 'blog/base.html' %}
 
-<header>
-  <h1>Entries</h1>
-</header>
-{% for entry in entries %}
-  <div class="entry">
-    <h2>{{ entry.title }}</h2>
-    <div class="about">created {{ entry.created|date:"Y-m-d" }}</div>
-    <a href="{% url 'blog:detail' entry.id %}">read</a>
-  </div>
-{% endfor %}
+{% block header %}
+  <h1>{% block title %}Entries{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  {% for entry in entries %}
+    <div class="entry">
+      <h2>{{ entry.title }}</h2>
+      <div class="about">created {{ entry.created|date:"Y-m-d" }}</div>
+      <a href="{% url 'blog:detail' entry.id %}">read</a>
+    </div>
+  {% endfor %}
+{% endblock %}

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{% block title %}{% endblock %} - CMS</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% load static %}
+<link rel="icon" type="image/png" href="{% static 'blog/icon/favicon.png' %}">
+</head>
+<body>
+  <div class="content">
+    <header>
+        {% block header %}{% endblock %}
+    </header>
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>
