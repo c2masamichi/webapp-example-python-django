@@ -9,7 +9,7 @@
     <div class="entry">
       <h2>{{ entry.title }}</h2>
       <div class="about">created {{ entry.created|date:"Y-m-d" }}</div>
-      <a class="waves-effect waves-light btn" href="{% url 'blog:detail' entry.id %}">read</a>
+      <a class="waves-effect waves-light btn light-blue lighten-1" href="{% url 'blog:detail' entry.id %}">read</a>
     </div>
   {% endfor %}
 {% endblock %}
