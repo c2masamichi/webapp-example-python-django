@@ -12,13 +12,13 @@ $ docker exec -it django_cms_dev_web_1 python manage.py migrate
 create superuser
 
 ```
-docker exec -it django_cms_dev_web_1 python manage.py createsuperuser --username dev-user --email dev-user@example.com
+$ docker exec -it django_cms_dev_web_1 python manage.py createsuperuser --username dev-user --email dev-user@example.com
 ```
 
 load test data
 
 ```
-docker exec -it django_cms_dev_web_1 python manage.py loaddata test_data.json
+$ docker exec -it django_cms_dev_web_1 python manage.py loaddata test_data.json
 ```
 
 ### Clear
