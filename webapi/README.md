@@ -12,7 +12,7 @@ $ docker exec -it django_webapi_dev_web_1 python manage.py migrate
 load test data
 
 ```
-docker exec -it django_webapi_dev_web_1 python manage.py loaddata test_data.json
+$ docker exec -it django_webapi_dev_web_1 python manage.py loaddata test_data.json
 ```
 
 ### Clear
