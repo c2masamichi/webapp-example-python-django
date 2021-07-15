@@ -30,8 +30,8 @@ def test_create_validate(title, body):
 @pytest.mark.parametrize(
     ('title', 'body'),
     (
-        ('a' * 101, 'created on test'),
-        ('created on test', 'a' * 10001),
+        ('a' * 101, 'updated on test'),
+        ('updated on test', 'a' * 10001),
     ),
 )
 def test_update_validate(title, body):
