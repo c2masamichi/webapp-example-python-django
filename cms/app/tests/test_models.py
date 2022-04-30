@@ -5,14 +5,6 @@ from blog.models import Entry
 
 
 @pytest.mark.django_db
-def test_get():
-    r = Entry.objects.all()
-    print('-----')
-    print(r)
-    print('-----')
-
-
-@pytest.mark.django_db
 @pytest.mark.parametrize(
     ('title', 'body'),
     (
