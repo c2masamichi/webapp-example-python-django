@@ -5,7 +5,7 @@ from .models import Entry
 
 
 def index(request):
-    entries = Entry.objects.all()
+    entries = Entry.objects.order_by('created').reverse()
     context = {'entries': entries}
     return render(request, 'blog/index.html', context)
 
