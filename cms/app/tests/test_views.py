@@ -14,7 +14,7 @@ def test_index(client):
 
 
 @pytest.mark.django_db
-def test_index_page(client):
+def test_index_page2(client):
     response = client.get('/?page=2')
     assert response.status_code == 200
     assert b'Test Title 07' in response.content
