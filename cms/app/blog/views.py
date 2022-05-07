@@ -7,8 +7,8 @@ from .models import Entry
 
 
 def index(request):
-    page_number = request.GET.get('page')
     limit = 5
+    page_number = request.GET.get('page')
 
     entries = Entry.objects.order_by('created').reverse()
     paginator = Paginator(entries, limit)
