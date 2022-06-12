@@ -14,19 +14,38 @@
     </div>
   </div>
   {% endfor %}
-  <div class="pagination">
-    <span class="step-links">
-      {% if entries.has_previous %}
-      <a href="?page=1">&laquo; first</a>
-      <a href="?page={{ entries.previous_page_number }}">previous</a>
-      {% endif %}
+
+  <nav aria-label="index">
+    <div class="pagination-page-info">
       <span class="current">
         {{ entries.number }} of {{ entries.paginator.num_pages }}
       </span>
-      {% if entries.has_next %}
-      <a href="?page={{ entries.next_page_number }}">next</a>
-      <a href="?page={{ entries.paginator.num_pages }}">last &raquo;</a>
+    </div>
+    <ul class="pagination">
+      {% if entries.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page=1" aria-label="First">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ entries.previous_page_number }}" aria-label="Previous">
+          <span aria-hidden="true">&LT;</span>
+        </a>
+      </li>
       {% endif %}
-    </span>
-  </div>
+      {% if entries.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ entries.next_page_number }}" aria-label="Next">
+          <span aria-hidden="true">&gt;</span>
+        </a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ entries.paginator.num_pages }}" aria-label="Last">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
 {% endblock %}
