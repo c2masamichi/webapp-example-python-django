@@ -14,7 +14,10 @@ def index(request):
     paginator = Paginator(entries, limit)
 
     entries_showed = paginator.get_page(page_number)
-    context = {'entries': entries_showed}
+    context = {
+        'entries': entries_showed,
+        'page_numbers': range(1, entries_showed.paginator.num_pages + 1)
+    }
     return render(request, 'blog/index.html', context)
 
 
