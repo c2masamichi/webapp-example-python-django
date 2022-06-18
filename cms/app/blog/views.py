@@ -16,7 +16,17 @@ def index(request):
     entries_showed = paginator.get_page(page_number)
     context = {
         'entries': entries_showed,
-        'page_numbers': range(1, entries_showed.paginator.num_pages + 1)
+        'page_numbers': [
+            {
+                'index': i,
+                'is_omitted': (
+                    i >= 3
+                    and i <= (paginator.num_pages - 2)
+                    and (i <= (int(page_number) - 3) or i >= (int(page_number) + 3))
+                )
+            }
+            for i in range(1, entries_showed.paginator.num_pages + 1)
+        ]
     }
     return render(request, 'blog/index.html', context)
 
