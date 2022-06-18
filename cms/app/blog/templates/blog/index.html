@@ -16,12 +16,6 @@
   {% endfor %}
 
   <nav aria-label="index">
-    <div class="pagination-page-info">
-      <span class="current">
-        {{ entries.number }} of {{ entries.paginator.num_pages }}
-      </span>
-    </div>
-
     <ul class="pagination">
       {% if entries.has_previous %}
       <li class="page-item">
