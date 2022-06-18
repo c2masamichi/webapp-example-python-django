@@ -25,9 +25,7 @@
       </li>
       {% else %}
       <li class="page-item disabled">
-        <a class="page-link" tabindex="-1" aria-disabled="true" aria-label="First">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
+        <span class="page-link" aria-label="First" aria-hidden="true">&laquo;</span>
       </li>
       {% endif %}
       {% for num in page_numbers %}
@@ -53,9 +51,7 @@
       </li>
       {% else %}
       <li class="page-item disabled">
-        <a class="page-link" tabindex="-1" aria-disabled="true" aria-label="Last">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
+        <span class="page-link" aria-label="Last" aria-hidden="true">&raquo;</span>
       </li>
       {% endif %}
     </ul>
