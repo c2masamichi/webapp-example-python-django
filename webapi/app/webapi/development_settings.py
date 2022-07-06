@@ -78,8 +78,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'dev_db',
-        'USER': 'dev_user',
-        'PASSWORD': 'dev_pass',
+        'USER': 'root',  # to make database in pytest
+        'PASSWORD': 'root_dev',
         'HOST': 'db',
         'PORT': '3306',
         'OPTIONS': {
