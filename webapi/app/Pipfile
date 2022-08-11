@@ -9,7 +9,7 @@ pylint = "*"
 pytest-django = "*"
 
 [packages]
-django = "4.0.6"
+django = "4.0.7"
 mysqlclient = "*"
 
 [requires]
